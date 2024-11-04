@@ -13,5 +13,6 @@ var taskTitle = "BACKLOG TASK";
 var description = "We need to do stuff";
 var storyPoints = 1;
 
-var fragment = create(`<div class="task"><h2>${taskTitle}</h2><p>Description: ${description}</p><q1>Story Points: ${storyPoints}</q1></div>`);
+const fragment = create(`<div class="task"><h2>${taskTitle}</h2><p>Description: ${description}</p><q1>Story Points: ${storyPoints}</q1></div>`);
+
 document.body.insertBefore(fragment, document.getElementsByClassName('List')[0]);
