@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: service-pod
+  labels:
+    app: service
+spec:
+  containers:
+  - name: service-container
+    image: service-image:latest  # Replace with your Docker image name
+    ports:
+    - containerPort: 8080          # Replace with the appropriate port
+    env:
+    - name: ENV_VAR_NAME           # Example environment variable
+      value: "value"
