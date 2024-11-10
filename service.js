@@ -10,7 +10,19 @@ function createBacklogTask(htmlStr) {
 }
 
 // access api
-const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&apikey=I24DBXT85LCQ72AP';
+const apiKey = 'I24DBXT85LCQ72AP';
+const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&apikey=' + apiKey;
+
+// Retrieve specific data
+function getAlphaVantagedata() {
+
+		const symbol = inpSymbol.value;
+
+		const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + symbol + '&interval=1min&apikey=' + apiKey;
+
+		requestFile( url );
+
+	}
 
 requestFile( url );
 
@@ -36,7 +48,7 @@ function requestFile( url ) {
 
 }
 
-
+// list data
 var title = "STOCK ITEM";
 var description = "We need some details";
 var value = 1;
