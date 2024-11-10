@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: service-container
-    image: service-image:latest  # Replace with your Docker image name
+    image: service-stock  # Replace with your Docker image name
     ports:
     - containerPort: 8080          # Replace with the appropriate port
     env:

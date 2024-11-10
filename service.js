@@ -16,6 +16,8 @@ const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol
 // Retrieve specific data
 function getAlphaVantagedata() {
 
+		document.getElementsByClassName("List").replaceChildren();
+
 		const symbol = inpSymbol.value;
 
 		const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=' + apiKey;
@@ -57,24 +59,25 @@ function requestFile( url ) {
             "3. low": "212.7809",
             "4. close": "213.7200",
             "5. volume": "3201038"
-        }}}`);
-      
-			  for (const category in json)
-			  {
-          if (category == "Meta Data")
-            continue;
-          
-					for (const item in json[category])
-					{
-              for (const key in item)
-              {
+        }}}`); // Test data if api not working
 
-              }
-            const fragment = createBacklogTask(`<div class="task"><h2>${category}</h2><p>Date: ${item}</p><p>Values: ${JSON.stringify(json[category][item])}</p></div>`);
-						document.body.insertBefore(fragment,        document.getElementsByClassName("List")[0]);
-            //divContents.innerText = item;
+			let fragments = [];
+      
+			for (const category in json)
+			{
+				if (category == "Meta Data")
+					continue;
+          
+				for (const item in json[category])
+				{
+					for (const key in item)
+					{
 
 					}
+           		 	const fragment = createBacklogTask(`<div class="stock"><h2>${category}</h2><p>Date: ${item}</p><p>Values: ${JSON.stringify(json[category][item])}</p></div>`);
+					fragments.push(fragment);
+					document.body.insertBefore(fragment, document.getElementsByClassName("List")[0]);
+				}
 			  }
 			  /*Object.entries(json).forEach(([key, value]) => {
 				console.log(`${key}: ${value}`);
