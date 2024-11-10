@@ -3,13 +3,10 @@ kind: Pod
 metadata:
   name: service-pod
   labels:
-    app: service
+    app: stock-interval-service
 spec:
   containers:
   - name: service-container
-    image: service-stock  # Replace with your Docker image name
+    image: service-stock:latest
     ports:
-    - containerPort: 8080          # Replace with the appropriate port
-    env:
-    - name: ENV_VAR_NAME           # Example environment variable
-      value: "value"
+    - containerPort: 8080          
