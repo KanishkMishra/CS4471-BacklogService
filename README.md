@@ -1,4 +1,4 @@
-# CS4471-DailyStockService
+# CS4471-StockIntervalService
 
  
 Functional Requirements​:
