@@ -8,8 +8,18 @@
     </head>
     <body class="container">
         <h1 class="service title">Service</h1>
-      	<p>Symbol: &nbsp;<input id=inpSymbol value='MSFT' ></p>
-	<p><button onclick=getAlphaVantagedata(); >get Alpha Vantage Data</button></p>
+        <div class="user input"></div>
+      	    <p>Symbol: &nbsp;<input id=inpSymbol value='IBM' ></p>
+            <p>
+                <label for="time">Choose Time Interval:</label>
+                <select name="time" id="timeInterval">
+                    <option value="TIME_SERIES_DAILY" selected>Daily</option>
+                    <option value="TIME_SERIES_WEEKLY">Weekly</option>
+                    <option value="TIME_SERIES_MONTHLY">Monthly</option>
+                </select>
+            </p>
+            <p><button onclick=getAlphaVantagedata(); >get Alpha Vantage Data</button></p>
+        </div>
         <div class="List"></div>
         <div id="divContents">Data will appear here or in devloper console</div>
         <div class="footer">

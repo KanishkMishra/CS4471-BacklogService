@@ -11,7 +11,7 @@ function createBacklogTask(htmlStr) {
 
 // access api
 const apiKey = 'I24DBXT85LCQ72AP';
-const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=' + apiKey;
+const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=' + apiKey;
 
 // Retrieve specific data
 function getAlphaVantagedata() {
@@ -20,7 +20,9 @@ function getAlphaVantagedata() {
 
 		const symbol = inpSymbol.value;
 
-		const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=' + apiKey;
+		const time = timeInterval.value;
+
+		const url = 'https://www.alphavantage.co/query?function=' + time + '&symbol=' + symbol + '&apikey=' + apiKey;
 
 		requestFile( url );
 
