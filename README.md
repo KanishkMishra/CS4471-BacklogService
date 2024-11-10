@@ -4,6 +4,12 @@
 Functional Requirements​:
 
 - FR 1 - View Stock: Must be able to see the daily changes in stock values
+  
+ - FR 1.1 - Stock Date: See the full date of stock value
+
+ - FR 1.2 - Stock Values: See Open, High, Low, and Close
+
+ - FR 1.3 - Stock Volume: See the volume of stock
 
 - FR 2 - Variable Company Stock: Users can choose which company's stock to view
 
