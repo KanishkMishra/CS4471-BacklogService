@@ -1,3 +1,7 @@
+// access api
+const defaultapiKey = 'I24DBXT85LCQ72AP';
+const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=' + defaultapiKey;
+
 // Create backlog tasks
 function createBacklogTask(htmlStr) {
     var frag = document.createDocumentFragment(),
@@ -9,10 +13,6 @@ function createBacklogTask(htmlStr) {
     return frag;
 }
 
-// access api
-const apiKey = 'I24DBXT85LCQ72AP';
-const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=' + apiKey;
-
 // Retrieve specific data
 function getAlphaVantagedata() {
 
@@ -21,6 +21,11 @@ function getAlphaVantagedata() {
 		const symbol = inpSymbol.value;
 
 		const time = timeInterval.value;
+
+		const apiKey = inpApiKey.value;
+
+		if (apiKey == '')
+			apiKey = defaultapiKey;
 
 		const url = 'https://www.alphavantage.co/query?function=' + time + '&symbol=' + symbol + '&apikey=' + apiKey;
 
@@ -63,8 +68,8 @@ function requestFile( url ) {
             "5. volume": "3201038"
         }}}`); // Test data if api not working
 
-			let fragments = [];
-      
+			// list data 
+			let fragments = [];    
 			for (const category in json)
 			{
 				if (category == "Meta Data")
@@ -81,20 +86,8 @@ function requestFile( url ) {
 					document.body.insertBefore(fragment, document.getElementsByClassName("List")[0]);
 				}
 			  }
-			  /*Object.entries(json).forEach(([key, value]) => {
-				console.log(`${key}: ${value}`);
-			  });*/
 
         console.log( 'json', json );
 	}
 
 }
-
-// list data
-/*var title = "STOCK ITEM";
-var description = "We need some details";
-var value = 1;
-
-const fragment = createBacklogTask(`<div class="task"><h2>${title}</h2><p>Description: ${description}</p><q1>Value: ${value}</q1></div>`);
-
-document.body.insertBefore(fragment, document.getElementsByClassName("List")[0]);*/
