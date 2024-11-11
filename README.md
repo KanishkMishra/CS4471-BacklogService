@@ -1,27 +1,24 @@
-# CS4471-BacklogService
+# CS4471-StockIntervalService
 
  
 Functional Requirements​:
 
+- FR 1 - View Stock: Must be able to see the daily changes in stock values
+  
+  - FR 1.1 - Stock Date: See the full date of stock value
 
-- FR 1 - manage backlog tasks: Must be able to manipulagte backlog task information​
+  - FR 1.2 - Stock Values: See Open, High, Low, and Close
 
-  - FR 1.1 - Create backlog task: Information regarding the task is needed, especially difficulty, size, priority, or dependencies​
+  - FR 1.3 - Stock Volume: See the volume of stock
 
-  - FR 1.2 - Read backlog task: All the task must be readily visible in a list including important distinguishing information ​
+- FR 2 - Variable Company Stock: Users can choose which company's stock to view
 
-  - FR 1.3 - Update backlog tasks: As new information is aquired from feedback from stakeholders, details must be updated​
+Quality Requirements​ 
 
-  - FR 1.4 - Delete backlog tasks: If a task is no longer required, it must be able to be removed from the backlog​
+- QR 1 - Choose which Interval to View (Usability): The user must be able to see specific ​time intervals 
 
-- FR 2 - Move backlog task in sprint: Tasks can't only remain inside the backlog, all information should be preserved when assigned​
+  - QR 1.1 - Choose timing (Usability): drop-down for Daily, Weekly, or Monthly values​
 
-Quality Requirements​
+- QR 2 - Graphic and Textual depictions (Usability): Graphical depiction will give more context with a line chart
 
-- QR 1 - Rearrange tasks to specification (Usability): Tasks must be arranged so the top of the backlog is the most essential tasks​
-
-  - QR 1.1 - Choose specification (Usability): Must be able to select point of comparison such as size, priority, or difficulty​
-
-- QR 2 - Notice dependecies (Usability): If one task depends on another, the second task must always be higher in the backlog​
-
-- QR 3 - Prevent unauthorized changes to tasks (Security): Changes to tasks should only be made by the users connected to that task​
+- QR 3 - (TBD) Prevent unauthorized changes to tasks (Security): Changes to tasks should only be made by the users connected to that task​
