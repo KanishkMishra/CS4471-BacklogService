@@ -21,4 +21,10 @@ Quality Requirements​
 
 - QR 2 - Graphic and Textual depictions (Usability): Graphical depiction will give more context with a line chart
 
-- QR 3 - (TBD) Prevent unauthorized changes to tasks (Security): Changes to tasks should only be made by the users connected to that task​
+- QR 3 - Inform User of API call failure (Usability): Use should be aware of issues
+
+  - QR 3.1 - Invalid API (Usability): Inform User when the inputted API is invalid
+
+  - QR 3.1 - Invalid Stocl Symbol (Usability): Inform User when the inputted Stock Symbol is invalid
+
+  - QR 3.2 - No more free calls (Usability): Inform user when there are no more API calls
