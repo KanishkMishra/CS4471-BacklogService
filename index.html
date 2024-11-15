@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Service</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
         <link rel="stylesheet" href="service.css">
         <script src="service.js" defer></script>
     </head>
@@ -22,8 +23,9 @@
             <a href="https://www.alphavantage.co/documentation/">Get an API Key from this Site</a>
             <p>User API key (optional): <input id=inpApiKey value='' ></p>
             <p><button onclick=getAlphaVantagedata(); >Written Data</button></p>
+            <p><button onclick=getVisualData(); >Visual Data</button></p>
         </div>
-        <div id="List"></div>
+        <div id="Data"></div>
         <div id="divContents">Data will appear here or in devloper console</div>
         <div class="footer">
             <p class="service">Service</p>
