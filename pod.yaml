@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
   - name: service-container
-    image: service-stock:latest
+    image: service-stock:0.0.1
     ports:
     - containerPort: 8080          
