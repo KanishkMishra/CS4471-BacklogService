@@ -25,6 +25,11 @@ function writtenData(json) {
 				  divContents.innerText = 'Looks like you have reached the 25 request limit on this API, please get a new API or subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits. ';
           return;
         }
+		if (category == "Error Message")
+			{
+					  divContents.innerText = 'This API call is invalid, please check your Stock Sybol and / or API key. ';
+			  return;
+			}
           
 				for (const item in json[category])
 				{
@@ -235,9 +240,7 @@ function requestFile( url ) {
 
 			  response = xhr.target.response;
 
-			  //json = JSON.parse( response );
-
-//divContents.innerText = json;
+divContents.innerText = response;
         	console.log( 'json', json );
           json = JSON.parse(response);
 		      writtenData(json);
