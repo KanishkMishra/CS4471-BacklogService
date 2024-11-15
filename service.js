@@ -62,7 +62,22 @@ function getVisualData() {
     //const url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo";
     fetch(url).then(response => response.json())
               .then((data) => {
-          let stockValues = data["Time Series (Daily)"];
+
+		let stockValues;
+		
+		switch (time) {
+			case "TIME_SERIES_DAILY":
+				stockValues = data["Time Series (Daily)"];
+				break;
+			case "TIME_SERIES_WEEKLY":
+				stockValues = data["Weekly Time Series"];
+				break;
+			case "TIME_SERIES_MONTHLY":
+				stockValues = data["Monthly Time Series"];
+				break;
+			default: 
+		}
+		
       //divContents.innerText = JSON.stringify(data);
           let dates = [];
       
@@ -183,7 +198,7 @@ function getAlphaVantagedata() {
 		const url = 'https://www.alphavantage.co/query?function=' + time + '&symbol=' + symbol + '&apikey=' + apiKey;
 
     // get test data set
-		if (apiKey == 'TEST')
+		/*if (apiKey == 'TEST')
     { 
 			writtenData(JSON.parse(`{
 			"Meta Data": {
@@ -201,9 +216,9 @@ function getAlphaVantagedata() {
 					"4. close": "213.7200",
 					"5. volume": "3201038"
 				}}}`)); // Test data set
-    } else {
+    } else {*/
       requestFile( url );
-    }
+    //}
 	}
 
 function requestFile( url ) {
