@@ -2,6 +2,36 @@
 const defaultapiKey = 'I24DBXT85LCQ72AP';
 const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=' + defaultapiKey;
 
+// Retrieve correct data set
+function retrieveData(json, time) {
+      let data;
+  		switch (time) {
+			case "TIME_SERIES_DAILY":
+				data = json["Time Series (Daily)"];
+				break;
+			case "TIME_SERIES_WEEKLY":
+				data = json["Weekly Time Series"];
+				break;
+			case "TIME_SERIES_MONTHLY":
+				data = json["Monthly Time Series"];
+				break;
+			default:
+		}
+    if (json.hasOwnProperty("Information"))
+    {
+      divContents.innerText = json["Information"];
+      Data.replaceChildren();
+      return;
+    }
+    if (json.hasOwnProperty("Error Message"))
+    {
+      divContents.innerText = json["Error Message"];
+      Data.replaceChildren();
+      return;
+    }
+    return data;
+}
+
 // Create backlog tasks
 function createBacklogTask(htmlStr) {
     var frag = document.createDocumentFragment(),
@@ -11,36 +41,6 @@ function createBacklogTask(htmlStr) {
         frag.appendChild(temp.firstChild);
     }
     return frag;
-}
-
-// display the json on screen in text
-function writtenData(json) {
-      // list data 
-			for (const category in json)
-			{
-				if (category == "Meta Data")
-					continue;
-        if (category == "Information")
-        {
-				  divContents.innerText = 'Looks like you have reached the 25 request limit on this API, please get a new API or subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits. ';
-          return;
-        }
-		if (category == "Error Message")
-			{
-					  divContents.innerText = 'This API call is invalid, please check your Stock Sybol and / or API key. ';
-			  return;
-			}
-          
-				for (const item in json[category])
-				{
-					for (const key in item)
-					{
-		
-					}
-					const fragment = createBacklogTask(`<div class="stock"><h2>${category}</h2><p>Date: ${item}</p><p>Values: ${JSON.stringify(json[category][item])}</p></div>`);
-					Data.appendChild(fragment);
-				}
-			}
 }
 
 function getVisualData() {
@@ -57,33 +57,20 @@ function getVisualData() {
 		  apiKey = defaultapiKey;
 
 	  const url = 'https://www.alphavantage.co/query?function=' + time + '&symbol=' + symbol + '&apikey=' + apiKey;
+    const margin = 80;
     const width = 800;
     const height = 500;
 
     const svg = d3.select("#Data")
                   .append("svg")
-                  .attr("width", width + 100)
-                  .attr("height", height + 50);
-    //const url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo";
+                  .attr("width", width + 2*margin)
+                  .attr("height", height + margin);
+  
     fetch(url).then(response => response.json())
               .then((data) => {
 
-		let stockValues;
+		let stockValues = retrieveData(data, time);
 		
-		switch (time) {
-			case "TIME_SERIES_DAILY":
-				stockValues = data["Time Series (Daily)"];
-				break;
-			case "TIME_SERIES_WEEKLY":
-				stockValues = data["Weekly Time Series"];
-				break;
-			case "TIME_SERIES_MONTHLY":
-				stockValues = data["Monthly Time Series"];
-				break;
-			default: 
-		}
-		
-      //divContents.innerText = JSON.stringify(data);
           let dates = [];
       
       // values for that date
@@ -105,9 +92,7 @@ function getVisualData() {
           
           // x axis
           let maxYear = d3.max(dates);
-          //maxYear.setMonth(maxYear.getMonth() + 3);
           let minYear = d3.min(dates); 
-      //divContents.innerText = dates;
       
           const xScale = d3.scaleTime()
                      .domain([minYear, maxYear])
@@ -117,7 +102,7 @@ function getVisualData() {
       
           svg.append("g")
              .attr("id", "x-axis")
-             .attr("transform", `translate(80, ${height})`)
+             .attr("transform", `translate(${margin}, ${height})`)
              .call(xAxis);
           
           // y axis
@@ -139,6 +124,23 @@ function getVisualData() {
              .attr("id", "y-axis")
              .attr("transform", "translate(80, 0)")
              .call(yAxis);
+      
+          // Volume axis
+          let maxVol = d3.max(volume);
+          let minVol = d3.min(volume);
+  
+          const y2Scale = d3.scaleLinear()
+                           .domain([minVol, maxVol])
+                           .range([0, height]);
+      
+          let volScale = volume.map(volume => y2Scale(volume));
+          y2Scale.range([height, 0])
+      
+          const y2Axis = d3.axisRight(y2Scale);
+          svg.append("g")
+                 .attr("id", "y-axis")
+                 .attr("transform", `translate(${width + margin}, 0)`)
+                 .call(y2Axis);
       
           // line function
           const line = d3.line()
@@ -181,12 +183,19 @@ function getVisualData() {
               .attr("stroke", "red")
               .attr("stroke-width", 1.5);
             
-
+          // Draw the "Volume" line
+          svg.append("path")
+              .datum(volScale)
+              .attr("d", line)
+              .attr("transform", "translate(80, 0)")
+              .attr("fill", "none")
+              .attr("stroke", "purple")
+              .attr("stroke-width", 1.5);
     }).catch((error) => console.error(error));
 }
 
 // Retrieve specific data
-function getAlphaVantagedata() {
+function getWrittenData() {
 
 		Data.replaceChildren();
     divContents.innerText = 'Data will appear here or in devloper console';
@@ -201,29 +210,8 @@ function getAlphaVantagedata() {
 			apiKey = defaultapiKey;
 
 		const url = 'https://www.alphavantage.co/query?function=' + time + '&symbol=' + symbol + '&apikey=' + apiKey;
-
-    // get test data set
-		/*if (apiKey == 'TEST')
-    { 
-			writtenData(JSON.parse(`{
-			"Meta Data": {
-				"1. Information": "Daily Prices (open, high, low, close) and Volumes",
-				"2. Symbol": "IBM",
-				"3. Last Refreshed": "2024-11-08",
-				"4. Output Size": "Compact",
-				"5. Time Zone": "US/Eastern"
-			},
-			"Time Series (Daily)": {
-				"2024-11-08": {
-					"1. open": "214.1600",
-					"2. high": "216.7000",
-					"3. low": "212.7809",
-					"4. close": "213.7200",
-					"5. volume": "3201038"
-				}}}`)); // Test data set
-    } else {*/
+  
       requestFile( url );
-    //}
 	}
 
 function requestFile( url ) {
@@ -240,9 +228,21 @@ function requestFile( url ) {
 
 			  response = xhr.target.response;
 
-divContents.innerText = response;
+          //divContents.innerText = response;
         	console.log( 'json', json );
           json = JSON.parse(response);
-		      writtenData(json);
-	}
+		      let data = retrieveData(json, timeInterval.value);
+          // list data    
+          for (const item in data)
+          {
+            const open = data[item]["1. open"];
+            const high = data[item]["2. high"];
+            const low = data[item]["3. low"];
+            const close = data[item]["4. close"];
+            const volume = data[item]["5. volume"];
+            
+            const fragment = createBacklogTask(`<div class="stock"><p>Date: ${item}</p><p>Values: Open - ${open}, Close - ${close}, High - ${high}, Low - ${low}, Volume - ${volume},</p></div>`);
+            Data.appendChild(fragment);
+          }
+      }
 }
