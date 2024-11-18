@@ -66,6 +66,11 @@ function getVisualData() {
                   .attr("width", width + 2*margin)
                   .attr("height", height + margin);
   
+    const tooltip = d3.select("#Data")
+                      .append("div")
+                      .attr("id", "tooltip")
+                      .style("opacity", 0);
+  
     fetch(url).then(response => response.json())
               .then((data) => {
 
@@ -122,7 +127,7 @@ function getVisualData() {
           const yAxis = d3.axisLeft(yScale);
           svg.append("g")
              .attr("id", "y-axis")
-             .attr("transform", "translate(80, 0)")
+             .attr("transform", `translate(${margin}, 0)`)
              .call(yAxis);
       
           // Volume axis
@@ -191,7 +196,56 @@ function getVisualData() {
               .attr("fill", "none")
               .attr("stroke", "purple")
               .attr("stroke-width", 1.5);
-    }).catch((error) => console.error(error));
+      
+          // Display all the Data values
+          svg.append("rect")
+              .attr("width", width)
+              .attr("height", height)
+              .attr("transform", `translate(${margin}, 0)`)
+              .style("fill", "none")
+              .style("pointer-events", "all")
+              .on("mousemove", (event) => {
+                  const [mouseX] = d3.pointer(event);
+                  const mouseDate = xScale.invert(mouseX);
+          
+                  let closestIndex = 0;
+                  let minDistance = Infinity;
+
+                  dates.forEach((date, i) => {
+                      const distance = Math.abs(date - mouseDate);
+                      if (distance < minDistance) {
+                          minDistance = distance;
+                          closestIndex = i;
+                      }
+                  });
+              
+                  const closestDate = dates[closestIndex];
+                  if (!closestDate) return;
+              
+                  // Retrieve all values for the closest date
+                  const openValue = open[closestIndex];
+                  const highValue = high[closestIndex];
+                  const lowValue = low[closestIndex];
+                  const closeValue = close[closestIndex];
+                  const volumeValue = volume[closestIndex];
+
+                  tooltip.style("opacity", 0.9)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 20) + "px")
+                        .html(`
+                            <strong>Date:</strong> ${closestDate.toLocaleDateString()}<br>
+                            <strong class="open">Open:</strong> ${openValue}<br>
+                            <strong class="high">High:</strong> ${highValue}<br>
+                            <strong class="low">Low:</strong> ${lowValue}<br>
+                            <strong class="close">Close:</strong> ${closeValue}<br>
+                            <strong class="volume">Volume:</strong> ${volumeValue}
+                        `);
+            })
+              .on("mouseout", () => {
+                tooltip.style("opacity", 0); // Hide tooltip
+            });
+    })
+      .catch((error) => console.error(error));
 }
 
 // Retrieve specific data
