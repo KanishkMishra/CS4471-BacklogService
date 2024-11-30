@@ -2,6 +2,25 @@
 const defaultapiKey = 'I24DBXT85LCQ72AP';
 const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=' + defaultapiKey;
 
+// Retrieve inputted date range, automaticallly fill unspecified values
+function retrieveDate() {
+  // start of time interval
+  let startDate = document.getElementById("startDateInput").value;
+    if (startDate == "")
+      startDate = new Date(-8640000000000000);
+    else
+      startDate = new Date(startDate);
+  
+  // end of time interval
+    let endDate = document.getElementById("endDateInput").value;
+    if (endDate == "")
+      endDate = new Date();
+    else
+      endDate = new Date(endDate);
+
+    return [startDate, endDate];
+}
+
 // Retrieve correct data set
 function retrieveData(json, time) {
       let data;
@@ -53,6 +72,8 @@ function getVisualData() {
 
 	  let apiKey = inpApiKey.value;
 
+    const dateRange = retrieveDate();
+
 	  if (apiKey == '')
 		  apiKey = defaultapiKey;
 
@@ -84,15 +105,23 @@ function getVisualData() {
           let low = [];
           let close = [];
           let volume = [];
+
+          let checkDate;
           for (const date in stockValues) {
             //divContents.innerText += date + " ";
-            dates.push(new Date(date));
-            
-            open.push(+stockValues[date]["1. open"]);
-            high.push(+stockValues[date]["2. high"]);
-            low.push(+stockValues[date]["3. low"]);
-            close.push(+stockValues[date]["4. close"]);
-            volume.push(+stockValues[date]["5. volume"]);
+            checkDate = new Date(date);
+
+            // display only dates in interval specified by user
+            if (dateRange[0] <= checkDate && checkDate <= dateRange[1])
+            {
+              dates.push(checkDate);
+              
+              open.push(+stockValues[date]["1. open"]);
+              high.push(+stockValues[date]["2. high"]);
+              low.push(+stockValues[date]["3. low"]);
+              close.push(+stockValues[date]["4. close"]);
+              volume.push(+stockValues[date]["5. volume"]);
+            }
           }
           
           // x axis
@@ -132,10 +161,10 @@ function getVisualData() {
       
           // Volume axis
           let maxVol = d3.max(volume);
-          let minVol = d3.min(volume);
+          //let minVol = d3.min(volume);
   
           const y2Scale = d3.scaleLinear()
-                           .domain([minVol, maxVol])
+                           .domain([0, maxVol])
                            .range([0, height]);
       
           let volScale = volume.map(volume => y2Scale(volume));
@@ -286,17 +315,24 @@ function requestFile( url ) {
         	console.log( 'json', json );
           json = JSON.parse(response);
 		      let data = retrieveData(json, timeInterval.value);
+          const dateRange = retrieveDate();
+          let checkDate;
           // list data    
           for (const item in data)
           {
-            const open = data[item]["1. open"];
-            const high = data[item]["2. high"];
-            const low = data[item]["3. low"];
-            const close = data[item]["4. close"];
-            const volume = data[item]["5. volume"];
-            
-            const fragment = createBacklogTask(`<div class="stock"><p>Date: ${item}</p><p>Values: Open - ${open}, Close - ${close}, High - ${high}, Low - ${low}, Volume - ${volume},</p></div>`);
-            Data.appendChild(fragment);
+            checkDate = new Date(item);
+
+            if (dateRange[0] <= checkDate && checkDate <= dateRange[1])
+            {
+              const open = data[item]["1. open"];
+              const high = data[item]["2. high"];
+              const low = data[item]["3. low"];
+              const close = data[item]["4. close"];
+              const volume = data[item]["5. volume"];
+              
+              const fragment = createBacklogTask(`<div class="stock"><p>Date: ${item}</p><p>Values: Open - ${open}, Close - ${close}, High - ${high}, Low - ${low}, Volume - ${volume},</p></div>`);
+              Data.appendChild(fragment);
+            }
           }
       }
 }
