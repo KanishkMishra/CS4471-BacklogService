@@ -8,29 +8,37 @@
         <script src="service.js" defer></script>
     </head>
     <body class="container">
-        <h1 class="service title">Service</h1>
-        <a href="https://stockanalysis.com/stocks/">Get Stock Symbol</a>
-        <div class="user input"></div>
-      	    <p>Symbol: &nbsp;<input id=inpSymbol value='IBM' ></p>
-            <p>
-                <label for="time">Choose Time Interval:</label>
-                <select name="time" id="timeInterval">
-                    <option value="TIME_SERIES_DAILY" selected>Daily</option>
-                    <option value="TIME_SERIES_WEEKLY">Weekly</option>
-                    <option value="TIME_SERIES_MONTHLY">Monthly</option>
-                </select>
-                <input type="date" id="startDateInput" />
-                <input type="date" id="endDateInput" />
-            </p>
-            <a href="https://www.alphavantage.co/documentation/">Get an API Key from this Site</a>
-            <p>User API key (optional): <input id=inpApiKey value='' ></p>
-            <p><button onclick=getWrittenData(); >Written Data</button></p>
-            <p><button onclick=getVisualData(); >Visual Data</button></p>
+        <div class="header">
+            <h1 class="serviceTitle">Service</h1>
+            <div class="userInput">
+                <div class="stocksInfo">
+                    <p>Symbol: &nbsp;<input id=inpSymbol value='IBM' ></p> 
+                    <p><a href="https://stockanalysis.com/stocks/">Get Stock Symbol</a></p>
+                </div>
+                <div class="timeInfo">
+                    <div>
+                        <label for="time">Choose Time Interval:</label>
+                        <select name="time" id="timeInterval">
+                            <option value="TIME_SERIES_DAILY" selected>Daily</option>
+                            <option value="TIME_SERIES_WEEKLY">Weekly</option>
+                            <option value="TIME_SERIES_MONTHLY">Monthly</option>
+                        </select>
+                    </div>
+                    <input type="date" id="startDateInput" />
+                    <input type="date" id="endDateInput" />
+                </div>
+                <div class = "apiInfo">
+                    <p>User API key (optional): <input id=inpApiKey value='' ></p>
+                    <p><a href="https://www.alphavantage.co/documentation/">Get an API Key from this Site</a></p>
+                </div>
+            </div>
+            <div class="buttons">
+                <p><button onclick=getWrittenData(); >Written Data</button><button onclick=getVisualData(); >Visual Data</button></p>
+            </div>
         </div>
         <div id="Data"></div>
-        <div id="divContents">Data will appear here or in devloper console</div>
         <div class="footer">
-            <p class="service">Service</p>
+            <div id="divContents">Data will appear here or in devloper console</div>
         </div>
     </body>
 </html>

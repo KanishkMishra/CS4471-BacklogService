@@ -30,3 +30,77 @@
 .volume {
     color: purple;
 }
+
+.serviceTitle {
+    margin: auto;
+    text-align: center;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+    min-width: 100vh;
+    min-height: 100vh;
+}
+
+div {
+    /*position: relative;*/
+    height: 15px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: lightgray;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+.buttons {
+    margin-top: 60px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+button {
+    margin-right: 10px;
+}
+
+.userInput {
+    display: flex; /* Horizontal layout */
+    flex-direction: row;
+    gap: 20px; /* Add spacing between main sections */
+    width: 100%;
+    align-items: center; /* Ensures vertical alignment across all children */
+    justify-content: space-around; 
+}
+
+.stocksInfo, .timeInfo, .apiInfo {
+    display: flex; 
+    flex-direction: column; /* Internal stacking */
+    align-items: flex-start; /* Align text and inputs consistently */
+    gap: 5px; /* Small spacing between internal elements */
+}
+
+input, select, label, a, p {
+    margin: 0; /* Removes default margins */
+    padding: 0; /* Removes default padding */
+    line-height: 1.5; /* Ensures consistent vertical spacing */
+    vertical-align: middle; /* Aligns inline elements vertically */
+}
+a {
+    text-decoration: none;
+    color: blue; /* Ensures links are styled uniformly */
+}
+
+.header {
+    height: 160px;
+    background-color: lightblue;
+    margin: 0;
+}
