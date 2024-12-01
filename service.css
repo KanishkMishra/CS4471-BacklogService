@@ -3,6 +3,7 @@
     padding: 5px;
     position: absolute;
     background-color: lightgrey;
+    height: fit-content;
 }
   
 .tooltip {
@@ -41,15 +42,17 @@
     padding: 0;
     min-width: 100vh;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 div {
-    /*position: relative;*/
+
     height: 15px;
 }
 
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     margin: 0;
     padding: 0;
@@ -73,34 +76,69 @@ button {
 }
 
 .userInput {
-    display: flex; /* Horizontal layout */
+    display: flex;
     flex-direction: row;
-    gap: 20px; /* Add spacing between main sections */
+    gap: 20px; 
     width: 100%;
-    align-items: center; /* Ensures vertical alignment across all children */
+    align-items: center; 
     justify-content: space-around; 
 }
 
 .stocksInfo, .timeInfo, .apiInfo {
     display: flex; 
-    flex-direction: column; /* Internal stacking */
-    align-items: flex-start; /* Align text and inputs consistently */
-    gap: 5px; /* Small spacing between internal elements */
+    flex-direction: column;
+    align-items: flex-start; 
+    gap: 5px; 
 }
 
 input, select, label, a, p {
-    margin: 0; /* Removes default margins */
-    padding: 0; /* Removes default padding */
-    line-height: 1.5; /* Ensures consistent vertical spacing */
-    vertical-align: middle; /* Aligns inline elements vertically */
+    margin: 0; 
+    padding: 0; 
+    line-height: 1.5; 
+    vertical-align: middle; 
 }
 a {
     text-decoration: none;
-    color: blue; /* Ensures links are styled uniformly */
+    color: blue; 
 }
 
 .header {
+    position: fixed;
+    width: 100vw;
     height: 160px;
     background-color: lightblue;
     margin: 0;
+    top: 0;
+}
+
+#Data {
+    margin-top: 160px;
+    margin-bottom: 30px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: calc(100vh - 190px);
+    overflow-y: auto; 
+}
+
+.stock {
+    background-color: lightgray;
+    margin: 10px 0; 
+    padding: 20px;
+    width: 80%; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: left; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock p {
+    margin: 5px 0; 
 }
