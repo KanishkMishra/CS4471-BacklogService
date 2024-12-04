@@ -64,7 +64,7 @@ function createBacklogTask(htmlStr) {
 
 function getVisualData() {
     Data.replaceChildren();
-    divContents.innerText = 'Data will appear here or in devloper console';
+    divContents.innerText = 'Errors will appear here';
 
 		const symbol = inpSymbol.value;
 
@@ -122,6 +122,11 @@ function getVisualData() {
               close.push(+stockValues[date]["4. close"]);
               volume.push(+stockValues[date]["5. volume"]);
             }
+          }
+
+          if (dates.length == 0)
+          {
+            divContents.innerText = 'There is no data for this time period, please choose another or change the interval.';
           }
           
           // x axis
@@ -281,7 +286,7 @@ function getVisualData() {
 function getWrittenData() {
 
 		Data.replaceChildren();
-    divContents.innerText = 'Data will appear here or in devloper console';
+    divContents.innerText = 'Errors will appear here';
 
 		const symbol = inpSymbol.value;
 
@@ -333,6 +338,11 @@ function requestFile( url ) {
               const fragment = createBacklogTask(`<div class="stock"><p>Date: ${item}</p><p>Values: Open - ${open}, Close - ${close}, High - ${high}, Low - ${low}, Volume - ${volume},</p></div>`);
               Data.appendChild(fragment);
             }
+          }
+
+          if (!Data.hasChildNodes()) 
+          {
+            divContents.innerText = "There is no data for this time period, please choose another or change the interval";
           }
       }
 }
