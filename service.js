@@ -267,7 +267,7 @@ function getVisualData() {
                         .style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY - 20) + "px")
                         .html(`
-                            <strong>Date:</strong> ${closestDate.toLocaleDateString()}<br>
+                            <strong>Date:</strong> ${closestDate.toISOString().split("T")[0]}<br>
                             <strong class="open">Open:</strong> ${openValue}<br>
                             <strong class="high">High:</strong> ${highValue}<br>
                             <strong class="low">Low:</strong> ${lowValue}<br>
